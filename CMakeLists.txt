@@ -30,6 +30,7 @@ target_link_libraries(${ADDON_NAME} PUBLIC ImGuizmo implot)
 target_include_directories(${ADDON_NAME} PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/third_party/IconFontCppHeaders>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/third_party/implot3d>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/third_party/imgui-filebrowser>
 )
 
 # Build examples for this addon (optional)
