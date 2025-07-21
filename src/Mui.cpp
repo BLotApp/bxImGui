@@ -17,7 +17,6 @@
 #include "U_ui.h"
 #include "ui/windows/AddonManagerWindow.h"
 #include "ui/windows/CanvasWindow.h"
-#include "ui/windows/CodeEditorWindow.h"
 #include "ui/windows/InfoWindow.h"
 #include "ui/windows/LogWindow.h"
 #include "ui/windows/MainMenuBar.h"

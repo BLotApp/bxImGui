@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 #include "core/ISettings.h"
-#include "windows/Window.h"
+#include "Window.h"
 
 namespace blot {
 
