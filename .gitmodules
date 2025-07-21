@@ -1,5 +1,5 @@
-[submodule "third-party"]
-	path = third-party
+[submodule "third_party/imgui"]
+	path = third_party/imgui
 	url = https://github.com/ocornut/imgui.git
 	branch = docking
 [submodule "third_party/IconFontCppHeaders"]
