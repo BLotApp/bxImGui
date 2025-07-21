@@ -1,6 +1,6 @@
 #pragma once
 #include "core/U_core.h"
-#include "addons/bxImGui/bxImGui.h"
+#include "bxImGui.h"
 
 class SampleMenubarApp : public blot::IApp {
   public:
