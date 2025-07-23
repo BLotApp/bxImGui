@@ -732,15 +732,18 @@ void Mui::setSettings(const blot::json &settings) {
 	// Restore more UI state as needed
 }
 
-void Mui::setEventSystem(blot::ecs::SEvent* es){
+void Mui::setEventSystem(blot::ecs::SEvent *es) {
 	m_eventSystem = es;
-	if(m_mainMenuBar){ m_mainMenuBar->setEventSystem(es);} 
+	if (m_mainMenuBar) {
+		m_mainMenuBar->setEventSystem(es);
+	}
 }
 
-void Mui::registerUIActions(blot::ecs::SEvent &eventSystem){
+void Mui::registerUIActions(blot::ecs::SEvent &eventSystem) {
 	// default bxImGui does not register application-specific actions.
 	m_eventSystem = &eventSystem;
-	if(m_mainMenuBar) m_mainMenuBar->setEventSystem(&eventSystem);
+	if (m_mainMenuBar)
+		m_mainMenuBar->setEventSystem(&eventSystem);
 }
 
 } // namespace blot

@@ -15,6 +15,7 @@
 #include "core/BlotEngine.h"
 #include "core/ISettings.h"
 #include "core/Iui.h"
+#include "ecs/systems/SEvent.h"
 #include "rendering/U_gladGlfw.h"
 #include "ui/windows/CanvasWindow.h"
 #include "ui/windows/InfoWindow.h"
@@ -23,7 +24,6 @@
 #include "ui/windows/TextureViewerWindow.h"
 #include "ui/windows/ThemePanel.h"
 #include "ui/windows/ToolbarWindow.h"
-#include "ecs/systems/SEvent.h"
 
 // Forward declarations
 struct GLFWwindow;

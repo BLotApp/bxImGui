@@ -1,18 +1,19 @@
 #include "bxImGui.h"
 #include <spdlog/spdlog.h>
-#include "core/BlotEngine.h"
 
 using namespace blot;
 
-bxImGui::bxImGui() : AddonBase("ImGui", "0.1.0") {}
+bxImGui::bxImGui() : blot::IAddon("ImGui", "0.1.0") {}
 
 bool bxImGui::init() {
-	auto engine = m_blotEngine; // inherited protected member
+	spdlog::info("[bxImGui] Initializing ImGui addon");
+
+	auto engine = getEngine();
 	if (!engine) {
-		spdlog::error(
-			"[bxImGui] BlotEngine pointer not set – cannot initialise UI");
+		spdlog::error("[bxImGui] No engine instance available");
 		return false;
 	}
+
 	if (engine->getUIManager()) {
 		spdlog::info("[bxImGui] UI manager already present – skipping creation");
 		m_ui = engine->getUIManager();
@@ -23,15 +24,13 @@ bool bxImGui::init() {
 	auto uiPtr = std::make_unique<Mui>(engine->getWindow());
 	m_ui = uiPtr.get();
 	engine->attachUIManager(std::move(uiPtr));
-
-	// Initialisation handled via engine.init() later or auto here
-	// if (!engine->getUIManager()->getSettings().is_null()) {
-	//    /* nothing */
-	//}
-
+	
 	// Call Mui::init() immediately so first frame is safe
 	m_ui->init();
 	engine->setUiInitialised(true);
+
+	spdlog::info("[bxImGui] ImGui addon initialised");
+	
 	return true;
 }
 
