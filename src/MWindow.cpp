@@ -5,12 +5,12 @@
 #include <iostream>
 #include <spdlog/spdlog.h>
 #include <sstream>
+#include "Window.h"
 #include "core/json.h"
 #include "core/util/AppPaths.h"
 #include "ecs/components/CTransform.h"
 #include "ecs/components/CWindow.h"
 #include "imgui.h"
-#include "Window.h"
 
 namespace blot {
 
@@ -25,7 +25,7 @@ MWindow::MWindow() : m_focusedWindowEntity(entt::null) {
 MWindow::~MWindow() { closeAllWindows(); }
 
 entt::entity MWindow::createWindow(const std::string &name,
-										 std::shared_ptr<Window> window) {
+								   std::shared_ptr<Window> window) {
 	// Check if window with this name already exists
 	auto existingEntity = getWindowEntity(name);
 	if (existingEntity != entt::null) {
@@ -89,32 +89,29 @@ entt::entity MWindow::getWindowEntity(const std::string &name) {
 }
 
 std::shared_ptr<Window> MWindow::getWindow(entt::entity e) {
-    auto it = m_windowMap.find(e);
-    return it != m_windowMap.end() ? it->second : nullptr;
+	auto it = m_windowMap.find(e);
+	return it != m_windowMap.end() ? it->second : nullptr;
 }
 
 std::shared_ptr<Window> MWindow::getWindow(const std::string &name) {
-    return getWindow(getWindowEntity(name));
+	return getWindow(getWindowEntity(name));
 }
 
 std::shared_ptr<Window> MWindow::getWindow(entt::entity e) const {
-    auto it = m_windowMap.find(e);
-    return it != m_windowMap.end() ? it->second : nullptr;
+	auto it = m_windowMap.find(e);
+	return it != m_windowMap.end() ? it->second : nullptr;
 }
 
 std::shared_ptr<Window> MWindow::getFocusedWindow() {
 	if (m_focusedWindowEntity != entt::null &&
 		m_registry.valid(m_focusedWindowEntity)) {
-		auto &windowComp =
-			m_registry.get<ecs::CWindow>(m_focusedWindowEntity);
+		auto &windowComp = m_registry.get<ecs::CWindow>(m_focusedWindowEntity);
 		return m_windowMap[m_focusedWindowEntity];
 	}
 	return nullptr;
 }
 
-entt::entity MWindow::getFocusedWindowEntity() {
-	return m_focusedWindowEntity;
-}
+entt::entity MWindow::getFocusedWindowEntity() { return m_focusedWindowEntity; }
 
 std::vector<std::string> MWindow::getAllWindowNames() const {
 	std::vector<std::string> windowNames;
@@ -134,8 +131,9 @@ MWindow::getAllWindowsWithDisplayNames() const {
 		const auto &windowComp = view.get<ecs::CWindow>(entity);
 		// Use the window's title for display, fallback to name if window is
 		// null
-		std::string displayName =
-			m_windowMap.at(entity) ? m_windowMap.at(entity)->getTitle() : windowComp.name;
+		std::string displayName = m_windowMap.at(entity)
+									  ? m_windowMap.at(entity)->getTitle()
+									  : windowComp.name;
 		windows.push_back({windowComp.name, displayName});
 	}
 	return windows;
@@ -198,8 +196,7 @@ void MWindow::focusWindow(const std::string &name) {
 void MWindow::closeFocusedWindow() {
 	if (m_focusedWindowEntity != entt::null &&
 		m_registry.valid(m_focusedWindowEntity)) {
-		auto &windowComp =
-			m_registry.get<ecs::CWindow>(m_focusedWindowEntity);
+		auto &windowComp = m_registry.get<ecs::CWindow>(m_focusedWindowEntity);
 		auto wnd = getWindow(m_focusedWindowEntity);
 		if (wnd) {
 			wnd->close();
@@ -229,8 +226,9 @@ void MWindow::renderAllWindows() {
 	sortWindowsByZOrder();
 
 	// Render all visible windows
-	auto view = m_registry.view<ecs::CWindow, ecs::CWindowTransform,
-								ecs::CWindowStyle>();
+	auto view =
+		m_registry
+			.view<ecs::CWindow, ecs::CWindowTransform, ecs::CWindowStyle>();
 	for (auto entity : view) {
 		auto &windowComp = view.get<ecs::CWindow>(entity);
 		auto &transformComp = view.get<ecs::CWindowTransform>(entity);
@@ -302,8 +300,7 @@ void MWindow::updateFocus() {
 		// Set new focus
 		m_focusedWindowEntity = newFocusedEntity;
 		if (newFocusedEntity != entt::null) {
-			auto &windowComp =
-				m_registry.get<ecs::CWindow>(newFocusedEntity);
+			auto &windowComp = m_registry.get<ecs::CWindow>(newFocusedEntity);
 			windowComp.isFocused = true;
 		}
 	}
@@ -575,13 +572,13 @@ MWindow::captureCurrentUIState(const std::string &workspaceName) {
 	return config;
 }
 
-WorkspaceConfig MWindow::createWorkspaceFromCurrentState(
-	const std::string &workspaceName) {
+WorkspaceConfig
+MWindow::createWorkspaceFromCurrentState(const std::string &workspaceName) {
 	return captureCurrentUIState(workspaceName);
 }
 
 bool MWindow::createWorkspace(const std::string &workspaceName,
-									const WorkspaceConfig &config) {
+							  const WorkspaceConfig &config) {
 	if (m_workspaces.find(workspaceName) != m_workspaces.end()) {
 		spdlog::error("Workspace '{}' already exists", workspaceName);
 		return false;
@@ -625,8 +622,7 @@ MWindow::getWorkspaceConfig(const std::string &workspaceName) const {
 	return WorkspaceConfig{};
 }
 
-void MWindow::setWindowVisibility(const std::string &windowName,
-										bool visible) {
+void MWindow::setWindowVisibility(const std::string &windowName, bool visible) {
 	if (m_currentWorkspace.empty())
 		return;
 	auto &config = m_workspaces[m_currentWorkspace];

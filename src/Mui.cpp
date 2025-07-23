@@ -11,6 +11,7 @@
 #include "../third_party/IconFontCppHeaders/IconsFontAwesome5.h"
 #include "ImGuiRenderer.h"
 #include "MWindow.h"
+#include "MainMenuBar.h"
 #include "U_ui.h"
 #include "core/BlotEngine.h"
 #include "core/ISettings.h"
@@ -19,7 +20,6 @@
 #include "ui/windows/CanvasWindow.h"
 #include "ui/windows/InfoWindow.h"
 #include "ui/windows/LogWindow.h"
-#include "MainMenuBar.h"
 #include "ui/windows/PropertiesWindow.h"
 #include "ui/windows/SaveWorkspaceDialog.h"
 #include "ui/windows/TextureViewerWindow.h"
@@ -382,10 +382,10 @@ void Mui::setupWindows(BlotEngine *app) {
 	m_windowManager->createWindow(propertiesWindow->getTitle(),
 								  propertiesWindow);
 
-
 	// Create main menu bar (standalone, not managed by MWindow)
 	m_mainMenuBar = std::make_unique<MainMenuBar>("Main Menu Bar");
 	m_mainMenuBar->setUIManager(this);
+	m_mainMenuBar->setEventSystem(m_eventSystem);
 
 	// Create addon manager window
 	auto addonManagerWindow = std::make_shared<AddonManagerWindow>(
@@ -730,6 +730,17 @@ void Mui::setSettings(const blot::json &settings) {
 		m_windowManager->setSettings(settings["windowManager"]);
 	}
 	// Restore more UI state as needed
+}
+
+void Mui::setEventSystem(blot::ecs::SEvent* es){
+	m_eventSystem = es;
+	if(m_mainMenuBar){ m_mainMenuBar->setEventSystem(es);} 
+}
+
+void Mui::registerUIActions(blot::ecs::SEvent &eventSystem){
+	// default bxImGui does not register application-specific actions.
+	m_eventSystem = &eventSystem;
+	if(m_mainMenuBar) m_mainMenuBar->setEventSystem(&eventSystem);
 }
 
 } // namespace blot

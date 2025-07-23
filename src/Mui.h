@@ -6,24 +6,24 @@
 #include <memory>
 #include <string>
 #include <vector>
-#include "core/Iui.h"
-#include "core/ISettings.h"
+#include "../third_party/IconFontCppHeaders/IconsFontAwesome5.h"
+#include "CoordinateSystem.h"
 #include "ImGuiRenderer.h"
 #include "MShortcut.h"
 #include "MWindow.h"
+#include "U_ui.h"
+#include "core/BlotEngine.h"
+#include "core/ISettings.h"
+#include "core/Iui.h"
+#include "rendering/U_gladGlfw.h"
 #include "ui/windows/CanvasWindow.h"
 #include "ui/windows/InfoWindow.h"
 #include "ui/windows/PropertiesWindow.h"
+#include "ui/windows/SaveWorkspaceDialog.h"
 #include "ui/windows/TextureViewerWindow.h"
 #include "ui/windows/ThemePanel.h"
 #include "ui/windows/ToolbarWindow.h"
-#include "CoordinateSystem.h"
-#include "core/BlotEngine.h"
-#include "ui/windows/SaveWorkspaceDialog.h"
-#include "core/Iui.h"
-#include "../third_party/IconFontCppHeaders/IconsFontAwesome5.h"
-#include "rendering/U_gladGlfw.h"
-#include "U_ui.h"
+#include "ecs/systems/SEvent.h"
 
 // Forward declarations
 struct GLFWwindow;
@@ -161,6 +161,10 @@ class Mui : public Iui {
 	json getSettings() const override;
 	void setSettings(const json &settings) override;
 
+	// Provide ECS event system to UI components
+	void setEventSystem(blot::ecs::SEvent *es);
+	void registerUIActions(blot::ecs::SEvent &) override;
+
   private:
 	// GLFW window reference
 	GLFWwindow *m_window;
@@ -191,6 +195,7 @@ class Mui : public Iui {
 
 	BlotEngine *m_blotEngine = nullptr;
 	CoordinateSystem m_coordinateSystem;
+	blot::ecs::SEvent *m_eventSystem = nullptr;
 };
 
 } // namespace blot
