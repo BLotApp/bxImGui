@@ -16,7 +16,7 @@
 #include "core/BlotEngine.h"
 #include "core/ISettings.h"
 #include "core/json.h"
-#include "ui/windows/AddonManagerWindow.h"
+#include "core/addon/WinAddons.h"
 #include "ui/windows/CanvasWindow.h"
 #include "ui/windows/InfoWindow.h"
 #include "ui/windows/LogWindow.h"
@@ -388,7 +388,7 @@ void Mui::setupWindows(BlotEngine *app) {
 	m_mainMenuBar->setEventSystem(m_eventSystem);
 
 	// Create addon manager window
-	auto addonManagerWindow = std::make_shared<AddonManagerWindow>(
+	auto addonManagerWindow = std::make_shared<WinAddons>(
 		"Addon Manager###MAddon", Window::Flags::None);
 	// Set the central MAddon pointer
 	if (m_blotEngine->getAddonManager()) {

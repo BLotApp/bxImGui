@@ -15,7 +15,8 @@ bool bxImGui::init() {
 	}
 
 	if (engine->getUIManager()) {
-		spdlog::info("[bxImGui] UI manager already present – skipping creation");
+		spdlog::info(
+			"[bxImGui] UI manager already present – skipping creation");
 		m_ui = engine->getUIManager();
 		return true;
 	}
@@ -24,13 +25,13 @@ bool bxImGui::init() {
 	auto uiPtr = std::make_unique<Mui>(engine->getWindow());
 	m_ui = uiPtr.get();
 	engine->attachUIManager(std::move(uiPtr));
-	
+
 	// Call Mui::init() immediately so first frame is safe
 	m_ui->init();
 	engine->setUiInitialised(true);
 
 	spdlog::info("[bxImGui] ImGui addon initialised");
-	
+
 	return true;
 }
 
