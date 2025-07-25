@@ -2,7 +2,7 @@
 
 #include <memory>
 #include <string>
-#include "imgui.h"
+#include <imgui.h>
 
 class ImGuiRenderer {
   public:

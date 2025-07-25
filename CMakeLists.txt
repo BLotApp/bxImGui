@@ -15,8 +15,8 @@ target_link_libraries(${ADDON_NAME} PUBLIC blot)
 target_include_directories(${ADDON_NAME} PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/src>
-    ${CMAKE_CURRENT_LIST_DIR}/imgui
-    ${CMAKE_CURRENT_LIST_DIR}/imgui/backends
+    ${CMAKE_CURRENT_LIST_DIR}/third_party/imgui
+    ${CMAKE_CURRENT_LIST_DIR}/third_party/imgui/backends
     ${CMAKE_SOURCE_DIR}/src
 )
 
@@ -24,7 +24,7 @@ target_include_directories(${ADDON_NAME} PUBLIC
 # Dear ImGui dependency (core + backends)
 # ------------------------------------------------------------------
 
-set(_imgui_dir "${CMAKE_CURRENT_LIST_DIR}/imgui")
+set(_imgui_dir "${CMAKE_CURRENT_LIST_DIR}/third_party/imgui")
 
 if (NOT EXISTS "${_imgui_dir}/imgui.h")
     # Ensure git trusts the build/_deps working directory on Windows FAT/NTFS

@@ -17,13 +17,13 @@
 #include "core/Iui.h"
 #include "ecs/systems/SEvent.h"
 #include "rendering/U_gladGlfw.h"
-#include "ui/windows/CanvasWindow.h"
-#include "ui/windows/InfoWindow.h"
-#include "ui/windows/PropertiesWindow.h"
-#include "ui/windows/SaveWorkspaceDialog.h"
-#include "ui/windows/TextureViewerWindow.h"
-#include "ui/windows/ThemePanel.h"
-#include "ui/windows/ToolbarWindow.h"
+#include "core/canvas/CanvasWindow.h"
+#include "InfoWindow.h"
+#include "PropertiesWindow.h"
+#include "SaveWorkspaceDialog.h"
+#include "TextureViewerWindow.h"
+#include "ThemePanel.h"
+#include "ToolbarWindow.h"
 
 // Forward declarations
 struct GLFWwindow;
